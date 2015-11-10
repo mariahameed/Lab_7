@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Color Map </title>
+	<script src="jquery-1.11.js">		</script>	
+	<style>
+		#optionsDIV a{
+			text-decoration:none;
+			color:white;
+			margin-left:20%;
+			font-size:20px;
+			}
+			
+		#optionsDIV
+		{
+			background:#068437;
+		}
+		
+		form{
+			background:#eee;
+		}
+		
+	</style>
+	
+</head>
+
+
+<body>
+
+	<div id="optionsDIV">	
+		<a href="#" id="createForm">		Create Form	</a>
+		<a href="#" id="createTextInput">		Create Text Input	</a>
+		<a href="#" id="createPasswordInput">		Create Password Input	</a>
+		<a href="#" id="createSelect">		Create select	</a>
+		<a href="#" id="createRadio">		Create radio	</a>
+		<a href="#" id="createCheckBox">		Create checkbox	</a>
+		<a href="#" id="createFile">		Create File	</a>
+		<a href="#" id="createDataList">		Create datalist </a>
+		<a href="#" id="createNumber">		Create number	</a>
+		<a href="#" id="createKeyGen">		Create keygen	</a>
+		<a href="#" id="createTextArea">		Create textarea	</a>
+		<a href="#" id="createOutput">		Create Output	</a>
+		
+		<button> JSON values </button>
+		<input type="button" value="Validate Form" id="validation">
+		<input type="button" value="create form" id="ffff">
+	</div>
+	
+	<div id="jsonResult">	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script>	
+	output = '';
+		$(document).ready(
+			function()
+			{
+				latestElement = ""
+				numRadio=0;
+				numCheckBox=0;
+				$("#createForm").click(
+					function()
+					{
+						var newLabel = document.createElement("label");
+						forms = document.createElement("form");
+						$("#optionsDIV").after(forms);
+						alert("Form created successfully");
+  					    fieldName=prompt("Please enter a name for form", "Form");						
+					    newLabel.innerHTML = "<br>"+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp <br>";
+//						newLabel.style.margin = "40%";
+					    $(forms).after(forms);
+						$(forms).append(newLabel);
+						latestElement = newLabel;
+						output +='{"name"="' +fieldName+',"Type"=form}';
+						
+					}
+				);
+				
+				
+				$("#createTextInput").click(
+					function()
+					{
+					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("input");
+					  newInput.type="text";
+					  fieldName=prompt("Please enter a name for text input", "Text");
+					  newLabel.innerHTML = "<br>"+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp <br>";
+					  newInput.name= fieldName+"textField";
+					  
+  					  var len = prompt("Please enter a maximum length", "length");
+					  
+					  if(len!="")
+						newInput.maxLength = len;
+
+						
+					  //var spaces = prompt("Are spaces allowed? enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+
+					  if(optional=="n")
+						newInput.className += " mandatory";
+						
+					  $(forms).append(newLabel);
+					  $(forms).append(newInput);
+					  output +='{"name"="' +fieldName+',"Type"=input:text}';
+					}
+				);
+				
+				$("#createPasswordInput").click(
+					function()
+					{
+					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("input");
+					  newInput.type="password";
+					  fieldName=prompt("Please enter a name for password", "Password");
+					  newLabel.innerHTML = "<br>"+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp <br>";
+					  newInput.name= fieldName;
+
+
+  					  var len = prompt("Please enter a maximum length", "length");
+					  if(len!="")
+						newInput.maxLength = len;
+
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  if(optional=="n")
+						newInput.className += " mandatory";
+
+					  $(forms).append(newLabel);
+					  $(forms).append(newInput);
+					  output +='{"name"="' +fieldName+',"Type"=input:password}';
+					}
+				);
+
+				$("#createRadio").click(
+					function()
+					{
+					  
+					  alert("enter done to stop adding elements");
+					  xx="";
+					  numRadio++;
+
+					while(xx != "done")
+{					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("input");
+					  newInput.type="radio";
+					  fieldName=prompt("Please enter a name for option. Enter 'done' to stop entering options", "Radio");
+					  newLabel.innerHTML = "<br>"+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp <br>";
+					  newInput.name= fieldName;
+					  $(forms).append(newInput);
+					  $(forms).append(newLabel);
+					  xx= fieldName;
+					  output +='{"name"="' +fieldName+',"Type"=input:radio}';
+}
+
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  if(optional=="n")
+						newInput.className += " mandatory";
+
+					}
+				);
+				
+				$("#createCheckBox").click(
+					function()
+					{
+						numCheckBox++;
+
+					  alert("enter done to stop adding elements");
+					  xx="";
+					while(xx != "done")
+{					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("input");
+					  newInput.type="checkbox";
+					  fieldName=prompt("Please enter a name for option. Enter 'done' to stop entering options", "Radio");
+					  					  if(fieldName == "done")
+						break;
+
+					  newLabel.innerHTML = ""+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp<br>";
+					  newInput.name= fieldName;
+					  $(forms).append(newInput);
+					  $(forms).append(newLabel);
+					  xx= fieldName;
+}						output +='{"name"="' +fieldName+',"Type"=input:checkbox}';
+
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  if(optional=="n")
+						newInput.className += " mandatory";
+
+					}
+				);
+
+
+				$("#createSelect").click(
+					function()
+					{
+					  
+					  alert("enter done to stop adding elements");
+					  xx="";
+					  
+					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("select");
+					  fieldName=prompt("Please enter a name for option. Enter 'done' to stop entering options", "Select");
+					  newLabel.innerHTML = ""+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp<br>";
+					  newInput.name= fieldName;
+					  $(forms).append(newInput);
+					  $(forms).append(newLabel);
+
+					while(xx != "done")
+{					  var newLabels = document.createElement("label");
+					  var newInputs = document.createElement("option");
+					  fieldName=prompt("Please enter a name for option. Enter 'done' to stop entering options", "Radio");
+					  if(fieldName == "done")
+						break;
+
+					  newLabels.innerHTML = ""+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp<br>";
+					  newInputs.innerHTML= fieldName;
+					  $(newInput).append(newInputs);
+					  xx= fieldName;
+					  output +='{"name"="' +fieldName+',"Type"=select}';
+}
+
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  if(optional=="n")
+						newInput.className += " mandatory";
+
+					}
+				);
+
+				$("#createFile").click(
+					function()
+					{
+					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("input");
+					  newInput.type="file";
+					  fieldName=prompt("Please enter a name for password", "File");
+					  newLabel.innerHTML = "<br>"+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp <br>";
+					  newInput.name= fieldName;
+					  $(forms).append(newLabel);
+					  $(forms).append(newInput);
+					  output +='{"name"="' +fieldName+',"Type"=input:file}';
+					  
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  if(optional=="n")
+						newInput.className += " mandatory";
+
+					}
+				);
+
+
+
+
+				$("#createDataList").click(
+					function()
+					{
+					  
+					  alert("enter done to stop adding elements");
+					  xx="";
+					  
+					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("datalist");
+					  fieldName=prompt("Please enter a name for option. Enter 'done' to stop entering options", "Select");
+					  newLabel.innerHTML = ""+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp<br>";
+					  newInput.name= fieldName;
+					  newInput.id= "aaaa";
+						while(xx != "done")
+						{
+						  var newLabels = document.createElement("label");
+						  var newInputs = document.createElement("option");
+						  fieldName=prompt("Please enter a name for option. Enter 'done' to stop entering options", "Radio");
+						  if(fieldName == "done")
+							break;
+						  newLabels.innerHTML = ""+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp<br>";
+						  newInputs.innerHTML= fieldName;
+						  newInputs.value = fieldName;
+						  $(newInput).append(newInputs);
+						  xx= fieldName;
+						  }
+
+					  var newInpt = document.createElement("input");
+					  newInpt.setAttribute("list","aaaa");
+  					  $(newInpt).append(newInput);
+					  
+					  $(forms).append(newLabel);
+					  $(forms).append(newInpt);
+					  output +='{"name"="' +fieldName+',"Type"=datalist}';					  
+					}
+				);
+
+
+				$("#createNumber").click(
+					function()
+					{
+					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("input");
+					  newInput.type="number";
+					  fieldName=prompt("Please enter a name for text input", "Text");
+					  newLabel.innerHTML = "<br>"+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp <br>";
+					  newInput.name= fieldName+"textField";
+					  $(forms).append(newLabel);
+					  $(forms).append(newInput);
+					  output +='{"name"="' +fieldName+',"Type"=input:number}';
+					  
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  if(optional=="n")
+						newInput.className += " mandatory";
+
+					}
+				);
+				
+		
+				$("#createKeyGen").click(
+					function()
+					{
+					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("keygen");
+					  fieldName=prompt("Please enter a name for text input", "keygen");
+					  newLabel.innerHTML = "<br>"+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp <br>";
+					  newInput.name= fieldName+"textField";
+					  $(forms).append(newLabel);
+					  $(forms).append(newInput);
+					  output +='{"name"="' +fieldName+',"Type"=keygen}';
+					  
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  if(optional=="n")
+						newInput.className += " mandatory";
+
+					}
+				);
+
+
+				$("#createTextArea").click(
+					function()
+					{
+					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("textarea");
+					  fieldName=prompt("Please enter a name for text input", "Textarea");
+					  newLabel.innerHTML = "<br>"+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp <br>";
+					  newInput.name= fieldName+"textField";
+					  
+					  
+					  fieldN=prompt("Please enter rows textarea", "5");
+					  newInput.rows= fieldN;
+
+					  fieldNam=prompt("Please enter colums for text input", "90");
+					  newInput.cols= fieldNam;
+
+					  
+   					  var len = prompt("Please enter a maximum length", "length");
+					  
+					  if(len!="")
+						newInput.maxLength = len;
+
+					  $(forms).append(newLabel);
+					  $(forms).append(newInput);
+					  output +='{"name"="' +fieldName+',"Type"=textarea}';
+					  
+					  
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  if(optional=="n")
+						newInput.className += " mandatory";
+
+					}
+				);
+
+
+				$("#createOutput").click(
+					function()
+					{
+					  var newLabel = document.createElement("label");
+					  var newInput = document.createElement("output");
+					  fieldName=prompt("Please enter a name for text input", "Output");
+					  newLabel.innerHTML = "<br>"+fieldName + "&nbsp&nbsp&nbsp&nbsp&nbsp <br>";
+					  newInput.name= fieldName+"textField";
+					  newInput.setAttribute("for",latestElement);
+					  $(forms).append(newLabel);
+					  $(forms).append(newInput);
+					  output +='"{name"="' +fieldName+',"Type"=output}';
+					  
+					  output +='{"name"="' +fieldName+',"Type"=Output}';
+					  
+					  var optional = prompt("Is it optional enter 'y' for 'yes' and 'n' for 'no'", "Y");
+					  if(optional=="n")
+						newInput.className += " mandatory";
+
+					}
+				);				
+				
+				$("button").click(
+					function()
+					{
+						output = '[' +output +"]"
+						localStorage.setItem("json", output);
+						alert(output);
+						console.log(output);
+					}
+				);				
+				
+				$("#validation").click(
+					function()
+					{
+						$(":input").each(
+							function()
+							{
+								var text_val = $(this).val();
+								
+								//if(text_val == "" || text_val== null)
+								if($(this).hasClass( "mandatory" ))
+								{
+									if(text_val == "" || text_val== null)
+									{
+										$(this).css("background-color", "orange");
+									}
+									else
+										$(this).css("background-color", "white");
+								}
+								
+							}
+						)
+						
+						checkedList="";
+						$(":checkbox").each(
+							function()
+							{
+								if($(this).is(':checked')==true)
+									checkedList += "*";
+							 }
+						)
+						
+						
+						if(numCheckBox>0)
+						{
+							if(checkedList == "" || checkedList== null)
+							{
+								alert("no checkbox selected");
+							}
+						}
+
+
+///////////////////////////////////////////////////////////////////////////////
+						if(numRadio>0)
+
+						{
+							if($('input:radio:checked').length > 0){
+							// go on with script
+							 }else{
+								alert("no radio selected");
+							 }
+						}						 						 
+						 
+						 //$('#test').attr('class'); 
+					}
+				)
+			}
+		);
+	</script>
+	</body>
+</html>
